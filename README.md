@@ -1,6 +1,6 @@
-Proyecto 3d con deteccion de manos
+Proyecto 3D con detección de manos (y también manipulación con el mouse)
 
-Proyecto hecho con React/vite usando three.js y Mediapipe/tasks-vision para mover un modelo 3d usando deteccion de manos
+Proyecto hecho con React/vite usando Three.js y Mediapipe/tasks-vision para mover un modelo 3D usando detección de manos.
 
-npm i 
+npm i
 npm run dev
