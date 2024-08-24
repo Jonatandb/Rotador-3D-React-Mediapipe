@@ -34,7 +34,7 @@ const Demo = ({rotation}) => {
 //     const ctx = canvas.getContext('2d');
 //     ctx.clearRect(0, 0, canvas.width, canvas.height);
 //     ctx.fillStyle = 'white';
-    
+
 //     landmarksArray.forEach(landmarks => {
 //         landmarks.forEach(landmark => {
 //             const x = landmark.x * canvas.width;
@@ -50,7 +50,7 @@ const Demo = ({rotation}) => {
             if (videoRef.current && videoRef.current.readyState >= 2) {
                 const detections = handLandmarker.detectForVideo(videoRef.current, performance.now());
                 setHandPresence(detections.handednesses.length > 0);
-                
+
                 // Assuming detections.landmarks is an array of landmark objects
                 if (detections.landmarks) {
                     rotation(detections.landmarks[0]);
@@ -82,12 +82,13 @@ const Demo = ({rotation}) => {
                 cancelAnimationFrame(animationFrameId);
             }
         };
-        
+
     }, []);
 
     return (
         <>
-        <h3 style={{position:'absolute', color:'white', top:'0px', left:'20px'}}>Mano detectada: {handPresence ? "Si" : "No"}</h3>
+        <h3 style={{position:'absolute', color:'white', top:'0px', left:'20px', userSelect: 'none'}}>Mano detectada: {handPresence ? "Si" : "No"}</h3>
+        <h3 style={{position:'absolute', color:'white', top:'20px', left:'20px', userSelect: 'none'}}>Mouse habilitado: {rotation.length != 0 ? "Si" : "No"}</h3>
         <div style={{ position: "relative", display:'none' }}>
             <video ref={videoRef} autoPlay playsInline ></video>
         </div>
