@@ -3,6 +3,7 @@ import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame , useLoader} from '@react-three/fiber';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader'
 import meshUrl from '/models/realistic_human_heart/scene.gltf'
+import { OrbitControls } from '@react-three/drei'
 
 const Cube = ({rotation}) => {
   const meshRef = useRef({ x: 0, y: 0 });
@@ -15,7 +16,7 @@ const Cube = ({rotation}) => {
 
   // Factor de suavizado (ajustable)
   const smoothingFactor = 0.25;  // Valor entre 0 y 1
-  
+
 
   useEffect(() => {
     if (rotation && rotation.length > 0) {
@@ -32,7 +33,7 @@ const Cube = ({rotation}) => {
       // Aplicar suavizado exponencial al escalado
       smoothedScale.current += (scale - smoothedScale.current) * 0.2;
       meshRef.current.scale.set(smoothedScale.current, smoothedScale.current, smoothedScale.current);
-  
+
       const targetRotationX = y * Math.PI * 2;
       const targetRotationY = x * Math.PI * 2;
       // Aplicar suavizado exponencial
@@ -43,7 +44,7 @@ const Cube = ({rotation}) => {
         smoothedRotation.current.x += (targetRotationX - smoothedRotation.current.x) * smoothingFactor;
         smoothedRotation.current.y += (targetRotationY - smoothedRotation.current.y) * smoothingFactor;
       }
-      
+
       // Aplicar las rotaciones suavizadas al modelo
       meshRef.current.rotation.x = smoothedRotation.current.x+0.3;
       meshRef.current.rotation.y = -smoothedRotation.current.y+3;
@@ -51,15 +52,16 @@ const Cube = ({rotation}) => {
   }, [rotation]);
 
   return (
-    <primitive 
-      ref={meshRef} 
-      object={scene.scene} 
-      scale={2} 
+    <primitive
+      ref={meshRef}
+      object={scene.scene}
+      scale={2}
     />
   );
 };
 
 const Scene = ({rotation}) => {
+  console.log({rotation})
   const handleCreated = ({ gl }) => {
     // Establecer la proporción de píxeles más baja
     gl.setSize(window.innerWidth, window.innerHeight); // Establecer tamaño del canvas
@@ -75,6 +77,7 @@ const Scene = ({rotation}) => {
         intensity={Math.PI * 2}
       />
       <Cube rotation={rotation}/>
+      {rotation.length == 0 && <OrbitControls />}
     </Canvas>
     </>
   );
